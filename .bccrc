@@ -19,6 +19,8 @@ alias cd9="cd ../../../../../../../../../"
 
 alias dotfiles='git --work-tree=$HOME --git-dir=$HOME/.dotfiles'
 
+export TOOLS=~/tools
+
 # python autocomplete
 alias py="python"
 export PYTHONSTARTUP=~/.pythonrc
