@@ -1,0 +1,24 @@
+[user]
+    name = bacchus
+    email = zukamimiridoari@gmail.com
+[color]
+    ui = auto
+[merge]
+    tool = meld
+[alias]
+    ch = checkout
+    st = status -sb
+    br = branch
+    pul = pull
+    k = !gitk --all
+    hist = log --pretty=format:'%C(yellow)%h %C(cyan)%ad %Creset| %s%C(green)%d %Creset[%an]' --graph --date=short
+    last = log -n1 --decorate=short --abbrev-commit --format=fuller
+    files = "!git diff --name-status \"$1^\" \"$1\" #"
+    diffcommit = "!git difftool -d \"$1^\" \"$1\" #"
+[core]
+    excludesfile = ~/.gitignore
+    editor = gedit -w
+[diff]
+    tool = meld
+[push]
+    default = simple

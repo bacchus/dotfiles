@@ -1,0 +1,87 @@
+# ================================================
+# Author: Bacchus
+# ================================================
+# put this file to ~/.astylerc for default --options
+#   alias bcc-style='astyle --recursive "*.h" "*.cpp"'
+# usage:
+#   bcc-style
+# or
+#   astyle [--options="~/.astylerc"] -r "<dir>/*.cpp" "<dir>/*.h"
+# ================================================
+
+
+# ================== Other Options: ==============
+# Do not retain a backup of the original file.
+suffix=none
+
+# Process subdirectories recursively.
+#recursive
+
+# Formatted display mode. Display only the files that have been formatted.
+formatted
+
+# Force use of the specified line end style. Valid options:
+# are windows (CRLF), linux (LF), and macold (CR).
+#lineend=linux
+
+
+# ================== Bracket Style Options: ======
+# Java style formatting/indenting. Attached brackets.
+style=attach
+
+
+# ================== Tab Options: ================
+# Indent using # spaces per indent.
+indent=spaces=4
+
+
+# ================== Indentation Options: ========
+# Indent line comments that start in column one.
+indent-col1-comments
+
+# Indent a minimal # spaces in a continuous conditional
+# belonging to a conditional header.
+min-conditional-indent=0
+
+# Indent a maximal # spaces in a continuous statement,
+# relative to the previous line.
+# The valid values are 40 thru 120.
+max-instatement-indent=40
+
+
+# ================== Padding Options: ============
+# Insert empty lines around unrelated blocks, labels, classes, ...
+break-blocks
+
+# Insert space padding around operators.
+pad-oper
+
+# Insert space padding after paren headers (e.g. 'if', 'for'...).
+pad-header
+
+# Delete empty lines within a function or method.
+# It will NOT delete lines added by the break-blocks options.
+delete-empty-lines
+
+# Attach a pointer or reference operator (*, &, or ^) to the operator type (left)
+align-pointer=type
+
+
+# ================== Formatting Options: =========
+# Add brackets to unbracketed one line conditional statements.
+#add-brackets
+
+# Don't break blocks residing completely on one line.
+keep-one-line-blocks
+
+# Convert tabs to the appropriate number of spaces.
+convert-tabs
+
+# will break the line if it exceeds more than
+# # characters. The valid values are 50 thru 200.
+# If the line contains logical conditionals they will be placed
+# first on the new line.
+max-code-length=80
+
+# Indent a C or C++ source file (this is the default).
+mode=c

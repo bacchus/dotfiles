@@ -1,0 +1,60 @@
+### bacchus
+# add to .bashrc
+#if [ -f ~/.bccrc ]; then
+#    . ~/.bccrc
+#fi
+
+# mac: PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\h\[`tput sgr0`\]:$PWD\n--> '
+PS1='\[\033]0;$TITLEPREFIX:${PWD//[^[:ascii:]]/?}\007\]\n$? \[\033[32m\]\u@\h \[\033[35m\]$MSYSTEM \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n--> '
+
+alias cd1="cd ../"
+alias cd2="cd ../../"
+alias cd3="cd ../../../"
+alias cd4="cd ../../../../"
+alias cd5="cd ../../../../../"
+alias cd6="cd ../../../../../../"
+alias cd7="cd ../../../../../../../"
+alias cd8="cd ../../../../../../../../"
+alias cd9="cd ../../../../../../../../../"
+
+alias dotfiles='git --work-tree=$HOME --git-dir=$HOME/.dotfiles'
+
+# python autocomplete
+alias py="python"
+export PYTHONSTARTUP=~/.pythonrc
+# arduino
+alias ard-fix="sudo usermod -a -G dialout bacchus; sudo chmod a+rw /dev/ttyACM0;"
+# astyle
+alias bcc-style='astyle --recursive "*.h" "*.cpp"'
+# java
+#export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+# adb
+#export PATH=$PATH:/media/$USER/sirius/tools/android-sdk/platform-tools
+# ccache
+#export USE_CCACHE=1
+#export CCACHE_DIR=<ccache-dir>
+
+
+### r-car
+export ddk=/media/$USER/sirius/ddk
+
+#export board=kingfisher
+export board=salvator
+#export TARGET_BOARD_PLATFORM=r8a7796 # M3
+
+#export workspace=/media/$USER/sirius/m3n
+#export workspace=/media/$USER/sirius/r-car
+export workspace=/media/$USER/sirius/r-car-p
+
+export hwcomposer=$workspace/hardware/renesas/hwcomposer
+export kernel=$workspace/device/renesas/kernel
+export evs=$workspace/device/renesas/$board/hal/evs
+export bccatomic=$workspace/external/libdrm/tests/bccatomictest
+export proprietary=$workspace/device/renesas/proprietary/imgtec
+export surfaceflinger=$workspace/frameworks/native/services/surfaceflinger
+
+PATH="$workspace/out/host/linux-x86/bin:$PATH"
+
+alias hwc-source-lunch='pushd $workspace; source build/envsetup.sh; lunch $board-userdebug; popd'
+alias hwc-shell='adb root; adb shell'
+alias hwc-push='adb root && adb remount && adb sync && adb reboot'
