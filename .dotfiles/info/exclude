@@ -1,0 +1,16 @@
+# $HOME/.dotfiles/info/exclude
+/*
+.ssh/
+/bin/repo
+
+# keep track
+!.README.md
+!.astylerc
+!.bccrc
+!.conkyrc
+!.gitconfig
+!.gitignore
+!.pythonrc
+
+!Templates/
+!bin/
