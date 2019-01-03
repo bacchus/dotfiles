@@ -7,6 +7,7 @@
     tool = meld
 [alias]
     ch = checkout
+    cm = commit
     st = status -sb
     br = branch
     pul = pull
