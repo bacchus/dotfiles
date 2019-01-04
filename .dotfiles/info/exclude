@@ -2,6 +2,7 @@
 /*
 .ssh/
 /bin/repo
+/bin/hwc-repo.sh
 
 # keep track
 !.README.md
@@ -14,3 +15,4 @@
 
 !Templates/
 !bin/
+!.gconf/

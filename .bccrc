@@ -1,8 +1,8 @@
 ### bacchus
 # add to .bashrc
-#if [ -f ~/.bccrc ]; then
+##if [ -f ~/.bccrc ]; then
 #    . ~/.bccrc
-#fi
+##fi
 
 # mac: PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\h\[`tput sgr0`\]:$PWD\n--> '
 PS1='\[\033]0;$TITLEPREFIX:${PWD//[^[:ascii:]]/?}\007\]\n$? \[\033[32m\]\u@\h \[\033[35m\]$MSYSTEM \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n--> '
