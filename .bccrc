@@ -4,6 +4,9 @@
 #    . ~/.bccrc
 ##fi
 
+# setup path to tools
+export TOOLS=~/tools
+
 # mac: PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\h\[`tput sgr0`\]:$PWD\n--> '
 PS1='\[\033]0;$TITLEPREFIX:${PWD//[^[:ascii:]]/?}\007\]\n$? \[\033[32m\]\u@\h \[\033[35m\]$MSYSTEM \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n--> '
 
@@ -19,8 +22,6 @@ alias cd9="cd ../../../../../../../../../"
 
 alias dotfiles='git --work-tree=$HOME --git-dir=$HOME/.dotfiles'
 
-export TOOLS=~/tools
-
 # python autocomplete
 alias py="python"
 export PYTHONSTARTUP=~/.pythonrc
@@ -31,7 +32,7 @@ alias bcc-style='astyle --recursive "*.h" "*.cpp"'
 # java
 #export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 # adb
-#export PATH=$PATH:/media/$USER/sirius/tools/android-sdk/platform-tools
+#export PATH=$PATH:$TOOLS/android-sdk/platform-tools
 # ccache
 #export USE_CCACHE=1
 #export CCACHE_DIR=<ccache-dir>
@@ -60,3 +61,4 @@ PATH="$workspace/out/host/linux-x86/bin:$PATH"
 alias hwc-source-lunch='pushd $workspace; source build/envsetup.sh; lunch $board-userdebug; popd'
 alias hwc-shell='adb root; adb shell'
 alias hwc-push='adb root && adb remount && adb sync && adb reboot'
+
