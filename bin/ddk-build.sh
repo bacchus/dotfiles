@@ -31,6 +31,7 @@ show_usage() {
     echo "n     )   non-debug           "
     echo "p     )   profile             "
     echo "d i   )   debug install       "
+    echo "cp    )   copy to tree        "
 }
 
 if [ $# == 0 ]; then
@@ -39,20 +40,33 @@ if [ $# == 0 ]; then
 fi
 
 #-------------------------------------------------------------------------------
+ddk_install() {
+    adb root && adb remount && adb push ./out/vendor / && adb push ./powervr.ini /vendor/etc/ && adb reboot # echo
+}
+
+ddk_copy() {
+    rsync -av ./out/vendor/ $proprietary/prebuilts/r8a7795/vendor/
+
+    rm $proprietary/prebuilts/r8a7795/vendor/bin/hwperfbin2jsont
+    rm $proprietary/prebuilts/r8a7795/vendor/bin/pvrhwperf
+    rm $proprietary/prebuilts/r8a7795/vendor/bin/pvrlogdump
+    rm $proprietary/prebuilts/r8a7795/vendor/bin/pvrlogsplit
+    rm -r $proprietary/prebuilts/r8a7795/vendor/lib/modules/
+
+    cp ./powervr.ini $proprietary/prebuilts/r8a7795/vendor/etc/
+}
+
+#-------------------------------------------------------------------------------
 echo "$(tput setab 3) --- Build ddk: $BCC_DEVICE $BCC_DBG_BUILD --- $(tput sgr0)"
 pushd $ddk
 
 if [[ $1 == "i" ]]; then
-    adb root && adb remount && adb push ./out/vendor / && adb reboot # echo
+    ddk_install || echo "$(tput setab 1) --- TEST ☠ --- $(tput sgr0)"
     echo "$(tput setab 2) --- Install OK, exit 😊 --- $(tput sgr0)"
     exit 0
-fi
-
-if [[ $1 == "cp2m3n" ]]; then
-    rsync -av \
-    ./out/vendor/ \
-    $proprietary/imgtec/prebuilts/r8a77965/vendor/
-    echo "$(tput setab 2) --- Copy to m3n tree OK, exit 😊 --- $(tput sgr0)"
+elif [[ $1 == "cp" ]]; then
+    ddk_copy || echo "$(tput setab 1) --- TEST ☠ --- $(tput sgr0)"
+    echo "$(tput setab 2) --- Copy to android tree OK, exit 😊 --- $(tput sgr0)"
     exit 0
 fi
 
@@ -71,12 +85,14 @@ if [ $res != 0 ] ; then
     popd
     exit $res
 else
-    echo "$(tput setab 2) --- OK 😊 --- $(tput sgr0)"
+    echo "$(tput setab 2) --- build OK 😊 --- $(tput sgr0)"
 fi
 
 #-------------------------------------------------------------------------------
 if [[ $2 == "i" ]]; then
-    adb root && adb remount && adb push ./out/vendor / && adb reboot # echo
+    ddk_install
+elif [[ $2 == "cp" ]]; then
+    ddk_copy
 fi
 
 #-------------------------------------------------------------------------------

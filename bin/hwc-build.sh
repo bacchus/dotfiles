@@ -98,7 +98,7 @@ build_all() {
     pushd $workspace
 
     #echo "$(tput setab 3) --- Clean --- $(tput sgr0)"
-    #make installclean
+    make installclean
 
     echo "$(tput setab 3) --- Start building all: ${@:1} --- $(tput sgr0)"
     make -j8 ${@:1}

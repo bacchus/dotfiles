@@ -2,7 +2,9 @@
 
 echo Okay! Will ring you on $(date --date="$1").
 
-sleep $(( $(date --date="$1" +%s) - $(date +%s) ));
+sleep $(( $(date --date="$1" +%s) - $(date +%s) ))
+
+notify-send --urgency=low -i "$(echo terminal)" "wake up neo!"
 
 echo Wake up!
 
