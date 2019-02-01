@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="switch_tab5" mtime="1513182383" type="string">
+		<stringvalue>&lt;Alt&gt;5</stringvalue>
+	</entry>
+	<entry name="switch_tab4" mtime="1513182381" type="string">
+		<stringvalue>&lt;Alt&gt;4</stringvalue>
+	</entry>
+	<entry name="switch_tab3" mtime="1513182379" type="string">
+		<stringvalue>&lt;Alt&gt;3</stringvalue>
+	</entry>
+	<entry name="switch_tab2" mtime="1513182377" type="string">
+		<stringvalue>&lt;Alt&gt;2</stringvalue>
+	</entry>
+	<entry name="switch_tab1" mtime="1513182374" type="string">
+		<stringvalue>&lt;Alt&gt;1</stringvalue>
+	</entry>
+</gconf>
