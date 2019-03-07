@@ -18,7 +18,7 @@ hwc_start() {
     # activity=$(aapt dump badging $1 | awk '/activity/{gsub("name=|'"'"'","");  print $2}')
     # adb shell am start -n $activity
 
-    package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}'); echo $package
+    package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}')
     adb shell monkey -p $package 1
 }
 
@@ -30,7 +30,11 @@ hwc_stop() {
 # ------------------------------------------------------------------------------
 show_usage() {
     echo "package/activity name from apk"
-    echo "  usage: hwc-apk.sh <apk>"
+    echo "i       )   hwc_install $2      ;;"
+    echo "u       )   hwc_uninstall $2    ;;"
+    echo "l       )   hwc_list_packages   ;;"
+    echo "r       )   hwc_start $2        ;;"
+    echo "k       )   hwc_stop $2         ;;"
 }
 
 if [ $# == 0 ]; then
@@ -41,9 +45,9 @@ fi
 case $1 in
 i       )   hwc_install $2      ;;
 u       )   hwc_uninstall $2    ;;
-ls      )   hwc_list_packages   ;;
-run     )   hwc_start $2        ;;
-kil     )   hwc_stop $2         ;;
+l       )   hwc_list_packages   ;;
+r       )   hwc_start $2        ;;
+k       )   hwc_stop $2         ;;
 *)  show_usage; exit 1
 esac
 

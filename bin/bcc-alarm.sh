@@ -1,10 +1,15 @@
 #!/bin/bash
 
-echo Okay! Will ring you on $(date --date="$1").
+timeout=1sec
+if [ $# != 0 ]; then
+    timeout=$1
+fi
 
-sleep $(( $(date --date="$1" +%s) - $(date +%s) ))
+echo Okay! Will ring you on $(date --date="$timeout").
 
-notify-send --urgency=low -i "$(echo terminal)" "wake up neo!"
+sleep $(( $(date --date="$timeout" +%s) - $(date +%s) ))
+
+notify-send --urgency=low "wake up neo!" -i ~/Pictures/cote.png
 
 echo Wake up!
 

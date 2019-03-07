@@ -101,6 +101,7 @@ debug_drm() {
     while sleep 1;
     do
         adb shell 'cat /proc/kmsg' | tee -a ~/logs/hwc-drm.txt
+        #adb shell dmesg | tee -a ~/logs/hwc-drm.txt
     done
 }
 

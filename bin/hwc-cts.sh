@@ -12,6 +12,7 @@ run_test_all() {
     -a arm64-v8a \
     -l VERBOSE \
     --logcat-on-failure \
+    --skip-device-info \
     --skip-preconditions \
     --skip-system-status-check com.android.compatibility.common.tradefed.targetprep.NetworkConnectivityChecker
 }
@@ -23,6 +24,7 @@ run_test_1() {
     -a arm64-v8a \
     -l VERBOSE \
     --logcat-on-failure \
+    --skip-device-info \
     --skip-preconditions \
     --skip-system-status-check com.android.compatibility.common.tradefed.targetprep.NetworkConnectivityChecker
 }
