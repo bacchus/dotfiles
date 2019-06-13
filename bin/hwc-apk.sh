@@ -2,7 +2,7 @@
 # package name from apk
 
 hwc_install() {
-    adb install $1
+    adb install -r $1
 }
 
 hwc_uninstall() {
@@ -14,7 +14,15 @@ hwc_list_packages() {
     adb shell pm list packages -f
 }
 
-hwc_start() {
+hwc_show() {
+    package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}')
+    activity=$(aapt dump badging $1 | awk '/activity/{gsub("name=|'"'"'","");  print $2}')
+    echo "$package"
+    echo "---"
+    echo "$activity"
+}
+
+hwc_run() {
     # activity=$(aapt dump badging $1 | awk '/activity/{gsub("name=|'"'"'","");  print $2}')
     # adb shell am start -n $activity
 
@@ -22,7 +30,7 @@ hwc_start() {
     adb shell monkey -p $package 1
 }
 
-hwc_stop() {
+hwc_kill() {
     package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}')
     adb shell am force-stop $package
 }
@@ -33,8 +41,9 @@ show_usage() {
     echo "i       )   hwc_install $2      ;;"
     echo "u       )   hwc_uninstall $2    ;;"
     echo "l       )   hwc_list_packages   ;;"
-    echo "r       )   hwc_start $2        ;;"
-    echo "k       )   hwc_stop $2         ;;"
+    echo "s       )   hwc_show $2         ;;"
+    echo "r       )   hwc_run $2          ;;"
+    echo "k       )   hwc_kill $2         ;;"
 }
 
 if [ $# == 0 ]; then
@@ -46,8 +55,9 @@ case $1 in
 i       )   hwc_install $2      ;;
 u       )   hwc_uninstall $2    ;;
 l       )   hwc_list_packages   ;;
-r       )   hwc_start $2        ;;
-k       )   hwc_stop $2         ;;
+s       )   hwc_show $2         ;;
+r       )   hwc_run $2          ;;
+k       )   hwc_kill $2         ;;
 *)  show_usage; exit 1
 esac
 

@@ -36,6 +36,9 @@ alias bcc-style='astyle --recursive "*.h" "*.cpp"'
 # ccache
 #export USE_CCACHE=1
 #export CCACHE_DIR=<ccache-dir>
+# qt
+# qtchooser -install bcc $TOOLS/qt/5.9.3/gcc_64/bin/qmake
+export QT_SELECT=bcc
 
 
 ### r-car
@@ -45,9 +48,9 @@ export ddk=/media/$USER/sirius/ddk
 export board=salvator
 #export TARGET_BOARD_PLATFORM=r8a7796 # M3
 
-#export workspace=/media/$USER/sirius/m3n
 #export workspace=/media/$USER/sirius/r-car
-export workspace=/media/$USER/sirius/r-car-p
+#export workspace=/media/$USER/sirius/r-car-p
+export workspace=/media/$USER/sirius/r-car-q
 
 export hwcomposer=$workspace/hardware/renesas/hwcomposer
 export kernel=$workspace/device/renesas/kernel
@@ -63,3 +66,6 @@ alias hwc-shell='adb root && adb remount && adb shell'
 alias hwc-push='adb root && adb remount && adb sync && adb reboot'
 alias hwc-fastboot='adb reboot bootloader'
 alias hwc-wipedata='adb reboot recovery'
+alias hwc-remount='adb root && adb remount'
+alias hwc-reboot='adb reboot'
+

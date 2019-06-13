@@ -54,6 +54,9 @@ show_usage() {
     echo "              "
     echo "rscpp [<test>] )   CtsRsCppTestCases   "
     echo "              "
+    echo "ui [<test>] )   CtsUiHostTestCases   "
+    echo "              android.ui.cts.TaskSwitchingTest#testTaskSwitching"
+    echo "              "
 }
 
 if [ $# == 0 ]; then
@@ -67,6 +70,7 @@ deqp    )   run_test CtsDeqpTestCases $2    ;;
 view    )   run_test CtsViewTestCases $2    ;;
 rs      )   run_test CtsRenderscriptTestCases $2    ;;
 rscpp   )   run_test CtsRsCppTestCases $2   ;;
+ui      )   run_test CtsUiHostTestCases $2   ;;
 *)          run_test $1 $2   ;;
 
 esac

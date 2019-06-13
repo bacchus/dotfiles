@@ -45,10 +45,10 @@ test_re() {
 
 # ------------------------------------------------------------------------------
 show_usage() {
-    echo "clear     )   logcat clear        "
+    echo "cl        )   logcat clear        "
     echo "all [*]   )   all-logcat [*]      "
     echo "hwc       )   hwc                 "
-    echo "strip [all,hwc,<path>] ) strip [target]  "
+    echo "str [all,hwc,<path>] ) strip [target]  "
     echo "re        )   test_re             "
 }
 
@@ -58,13 +58,12 @@ if [ $# == 0 ]; then
 fi
 
 case $1 in
-clear   )   test_cl         ;;
+cl      )   test_cl         ;;
 all     )   test_all ${@:2} ;;
 hwc     )   test_hwc        ;;
-strip   )   test_strip $2   ;;
+str     )   test_strip $2   ;;
 re      )   test_re         ;;
-
-*)  show_usage; exit 1
+*       )   test_all -s $1 ${@:2} ;;
 esac
 
 exit 0

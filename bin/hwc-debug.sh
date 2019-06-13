@@ -49,6 +49,7 @@ debug_lsof() {
     do
         tput clear; tput sc; tput cup 0 0;
 
+        adb shell 'cat /proc/sys/fs/file-nr'
         adb shell lsof | grep "$1" | wc -l
 
         tput rc;
