@@ -20,7 +20,7 @@ hwc_build() {
     echo "$(tput setab 4) --- building: $1 --- $(tput sgr0)"
     cd $1
 
-    mm -j4
+    mm -j10
     # showcommands
     #2>&1 | grep -iw error | head -10 #TODO: test mode
 
@@ -42,8 +42,8 @@ build_noflash() {
     #make installclean
 
     echo "$(tput setab 3) --- Start building all: ${@:1} --- $(tput sgr0)"
-    make ${@:1} 
-    
+    make -j8 ${@:1}
+
     #SHELL='sh -x' showcommands VERBOSE=1
     #2>&1 | grep -iw error | head -10 #TODO: test mode
 
@@ -99,8 +99,8 @@ build_all() {
     make installclean
 
     echo "$(tput setab 3) --- Start building all: ${@:1} --- $(tput sgr0)"
-    make -j4 ${@:1}
-    
+    make -j10 ${@:1}
+
     #2>&1 | grep -iw error | head -10 #TODO: test mode
 
     res=$?
@@ -141,10 +141,13 @@ build_q() {
     pushd $workspace
 
     source_lunch
-    #make installclean
 
-    echo "$(tput setab 3) --- Start building Q --- $(tput sgr0)"
-    make -j4
+    if [[ $1 == "cl" ]]; then
+        make installclean
+    fi
+
+    echo "$(tput setab 3) --- Start building Q [$1] --- $(tput sgr0)"
+    make -j24
 
     res=$?
     if [ $res != 0 ] ; then
@@ -152,15 +155,33 @@ build_q() {
         popd # workspace
         exit $res
     fi
+
+    if [[ $1 == "bl" ]]; then
+        make bootloader.img
+    fi
     
+    if [[ $1 == "no" ]]; then
+        echo "$(tput setab 2) --- Finished! Enjoy! 😊 --- $(tput sgr0)"
+        popd # workspace
+        exit $res
+    fi
+
     echo "$(tput setab 3) --- Reboot device to fastboot mode --- $(tput sgr0)"
     adb reboot bootloader
-    
+
     echo "$(tput setab 3) --- Wait device for 30sec --- $(tput sgr0)"
     sleep 30
-    
-    echo "$(tput setab 3) --- Fastboot --- $(tput sgr0)"
-    vendor/renesas/utils/fastboot/fastboot.sh --nobl --noerase --noresetenv
+
+    if [[ $1 == "bl" ]]; then
+        echo "$(tput setab 3) --- Fastboot with bootloader --- $(tput sgr0)"
+        vendor/renesas/utils/fastboot/fastboot.sh # --noerase --noresetenv
+    elif [[ $1 == "er" ]]; then
+        echo "$(tput setab 3) --- Fastboot with erase --- $(tput sgr0)"
+        vendor/renesas/utils/fastboot/fastboot.sh --nobl
+    else
+        echo "$(tput setab 3) --- Fastboot --- $(tput sgr0)"
+        vendor/renesas/utils/fastboot/fastboot.sh --noerase --noresetenv --nobl
+    fi
 
     res=$?
     if [ $res != 0 ] ; then
@@ -168,7 +189,7 @@ build_q() {
     else
         echo "$(tput setab 2) --- Finished! Enjoy! 😊 --- $(tput sgr0)"
     fi
-    
+
     popd # workspace
     exit $res
 }
@@ -190,7 +211,7 @@ build_clean() {
     CLEAN_TARGET=$1
     echo "$(tput setab 3) --- Clean $CLEAN_TARGET --- $(tput sgr0)"
     if [[ $1 == "hwc" ]]; then
-        CLEAN_TARGET=android.hardware.graphics.composer@2.1-service.renesas
+        CLEAN_TARGET=android.hardware.graphics.composer@2.4-service.renesas
     fi
 
     make clean-$CLEAN_TARGET
@@ -203,7 +224,8 @@ show_usage() {
     echo ".      )   build .        "
     echo "hwc    )   build hwc      "
     echo "all    )   build all [*] +fastboot"
-    echo "q      )   build all Q    "
+    echo "q      )   build all Q [cl,bl,no]"
+    echo "r      )   build all R [cl,bl,no]"
     echo "nofl   )   build all [*]  "
     echo "flash  )   fastboot       "
     echo "cts    )   build cts      "
@@ -222,7 +244,8 @@ case $1 in
 .       )   hwc_build `pwd`         ;;
 hwc     )   hwc_build $hwcomposer   ;;
 all     )   build_all ${@:2}        ;;
-q       )   build_q                 ;;
+q       )   build_q ${@:2}          ;;
+r       )   build_q ${@:2}          ;;
 nofl    )   build_noflash ${@:2}    ;;
 flash   )   build_flash             ;;
 cts     )   build_noflash cts       ;;

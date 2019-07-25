@@ -108,7 +108,7 @@ debug_drm() {
 
 debug_loop() {
     echo "$(tput setab 4) --- lunch LOOP ${@:1} --- $(tput sgr0)"
-    
+
     watch -n 0.5 ${@:1};
 
 #    while sleep 1;
@@ -123,7 +123,8 @@ debug_loop() {
 
 debug_layers() {
     #adb shell dumpsys SurfaceFlinger | awk '/Allocated buffers/,/IMG Graphics HAL state/'
-    adb shell dumpsys SurfaceFlinger | awk '/Display 0 HWC layers/,/h\/w composer state/'
+    adb shell dumpsys SurfaceFlinger | awk '/Tracing state/,/IMG Graphics HAL state/'
+#    adb shell dumpsys SurfaceFlinger | awk '/Tracing state/,/h\/w composer state/'
 }
 
 # ------------------------------------------------------------------------------

@@ -121,10 +121,38 @@ test_scrn() {
     fi
 
     date_time=`date +%m-%d_%H-%M-%S`
-    file_name=/sdcard/$date_time"_d"$disp$file_coment.png
+    file_name=$date_time"_d"$disp$file_coment.png
+    full_name=/sdcard/$file_name
     cur=`pwd`
 
-    adb shell screencap -d $disp -p $file_name
+    adb shell screencap -d $disp -p $full_name
+    res=$?
+    if [ $res != 0 ] ; then
+        echo "$(tput setab 1) --- Screenshot Error! ☠ --- $(tput sgr0)"
+        exit $res
+    else
+        echo "$(tput setab 2) --- screenshot $file_name saving to $cur --- $(tput sgr0)"
+    fi
+    
+    adb pull $full_name
+    adb shell rm $full_name
+    eog $cur/$file_name
+    
+    exit $res
+}
+
+test_video() {
+    echo "$(tput setab 4) --- hwc-test_video [coment] --- $(tput sgr0)"
+
+    if [ $# -gt 0 ]; then
+        file_coment="_$2"
+    fi
+
+    date_time=`date +%m-%d_%H-%M-%S`
+    file_name=/sdcard/$date_time"_d"$disp$file_coment.mp4
+    cur=`pwd`
+
+    adb shell screenrecord $file_name
     res=$?
     adb pull $file_name
     adb shell rm $file_name
@@ -200,7 +228,8 @@ show_usage() {
     echo "                              "
     echo "bcc )     bccatomictest [crtc]"
     echo "fps )     test_fps [0|1]      "
-    echo "scrn )    test_scrn [disp] [coment]"
+    echo "sc  )    test_scrn [disp] [coment]"
+    echo "vid )    test_video [coment]"
     echo "                              "
     echo "gfx)      gfxbench_test       "
     echo "glm)      glmark_test         "
@@ -232,7 +261,8 @@ monkey  )   test_monkey     ;;
 
 bcc )     test_bccatomic $2 ;;
 fps )     test_fps       $2 ;;
-scrn )    test_scrn      $2 $3;;
+sc  )     test_scrn      $2 $3;;
+vid )     test_video     $2;;
 
 gfx)    gfxbench_test ;;
 glm)    glmark_test   ;;

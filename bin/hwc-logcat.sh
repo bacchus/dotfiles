@@ -33,7 +33,7 @@ test_strip() {
 
     echo "$(tput setab 4) --- strip [$1] {$test_file} --- $(tput sgr0)"
 
-    awk '!($1=$2=$3=$4="")' $test_file | awk '{$1=$1}1' > $test_file.tmp
+    awk '!($1=$2=$3=$4="")' $test_file | awk '{$1=$1}1' | sed -r "s/[[:cntrl:]]\[[0-9]{1,3}m//g" > $test_file.tmp
     rm -f $test_file.bak && mv $test_file{,.bak} && mv $test_file{.tmp,}
 }
 

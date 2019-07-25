@@ -9,6 +9,7 @@
     ch = checkout
     cm = commit
     cl = clean
+    cp = cherry-pick
     st = status -sb
     br = branch
     pul = pull
@@ -24,3 +25,8 @@
     tool = meld
 [push]
     default = simple
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f

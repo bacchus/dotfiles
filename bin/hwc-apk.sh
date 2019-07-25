@@ -27,6 +27,7 @@ hwc_run() {
     # adb shell am start -n $activity
 
     package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}')
+    echo $package
     adb shell monkey -p $package 1
 }
 
@@ -38,6 +39,7 @@ hwc_kill() {
 # ------------------------------------------------------------------------------
 show_usage() {
     echo "package/activity name from apk"
+    echo "ir      )   hwc_install && hwc_run $2   ;;"
     echo "i       )   hwc_install $2      ;;"
     echo "u       )   hwc_uninstall $2    ;;"
     echo "l       )   hwc_list_packages   ;;"
@@ -52,6 +54,7 @@ if [ $# == 0 ]; then
 fi
 
 case $1 in
+ir      )   hwc_install $2 && hwc_run $2    ;;
 i       )   hwc_install $2      ;;
 u       )   hwc_uninstall $2    ;;
 l       )   hwc_list_packages   ;;

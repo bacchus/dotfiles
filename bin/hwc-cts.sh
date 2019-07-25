@@ -1,13 +1,13 @@
 #!/bin/bash
 
 BCC_TOOL=tools/cts-tradefed
-
+#BCC_TOOL=cts-tradefed
 # cts-tradefed
 # tools/cts-tradefed
-# $workspace/out/host/linux-x86/cts/android-cts/tools/cts-tradefed
+# $workspace/out/host/linux-x86/cts/android-cts
 # ------------------------------------------------------------------------------
 run_test_all() {
-    $BCC_TOOL run cts \
+    $BCC_TOOL run cts-dev \
     -m $1 \
     -a arm64-v8a \
     -l VERBOSE \
@@ -18,7 +18,7 @@ run_test_all() {
 }
 
 run_test_1() {
-    $BCC_TOOL run cts \
+    $BCC_TOOL run cts-dev \
     -m $1 \
     -t $2 \
     -a arm64-v8a \
@@ -30,6 +30,9 @@ run_test_1() {
 }
 
 run_test() {
+    pushd $workspace; source build/envsetup.sh; lunch $board-userdebug; popd
+    export ANDROID_BUILD_TOP=
+
     echo "Run cts, TOOL: $BCC_TOOL"
     case $# in
     1 ) run_test_all $1     ;;
@@ -58,6 +61,10 @@ show_usage() {
     echo "ui [<test>] )   CtsUiHostTestCases   "
     echo "              android.ui.cts.TaskSwitchingTest#testTaskSwitching"
     echo "              "
+    echo "nhw [<test>] )   CtsNativeHardwareTestCases   "
+    echo "              "
+    echo "gra [<test>] )   CtsGraphicsTestCases   "
+    echo "              "
 }
 
 if [ $# == 0 ]; then
@@ -72,6 +79,8 @@ view    )   run_test CtsViewTestCases $2    ;;
 rs      )   run_test CtsRenderscriptTestCases $2    ;;
 rscpp   )   run_test CtsRsCppTestCases $2   ;;
 ui      )   run_test CtsUiHostTestCases $2   ;;
+nhw     )   run_test CtsNativeHardwareTestCases $2   ;;
+gra     )   run_test CtsGraphicsTestCases $2   ;;
 *)          run_test $1 $2   ;;
 
 esac
