@@ -108,15 +108,17 @@ debug_drm() {
 
 debug_loop() {
     echo "$(tput setab 4) --- lunch LOOP ${@:1} --- $(tput sgr0)"
+    
+    watch -n 0.5 ${@:1};
 
-    while sleep 1;
-    do
-        tput clear; tput sc; tput cup 0 0;
+#    while sleep 1;
+#    do
+#        tput clear; tput sc; tput cup 0 0;
 
-        ${@:1};
+#        ${@:1};
 
-        tput rc;
-    done
+#        tput rc;
+#    done
 }
 
 debug_layers() {

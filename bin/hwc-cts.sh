@@ -38,6 +38,7 @@ run_test() {
 }
 # ------------------------------------------------------------------------------
 show_usage() {
+    echo "$workspace/out/host/linux-x86/cts/android-cts"
     echo "deqp [<test>] )   CtsDeqpTestCases   "
     echo "              dEQP-EGL.functional.get_frame_timestamps#rgb565_depth_stencil"
     echo "              dEQP-EGL.functional.robustness.reset_context.shaders.infinite_loop.query_status#compute"

@@ -42,14 +42,16 @@ test_water() {
 test_loop() {
     echo "$(tput setab 4) --- lunch LOOP ${@:1} --- $(tput sgr0)"
 
-    while sleep 1;
-    do
-        tput clear; tput sc; tput cup 0 0;
+    watch -n 0.5 ${@:1};
 
-        ${@:1};
+#    while sleep 1;
+#    do
+#        tput clear; tput sc; tput cup 0 0;
 
-        tput rc;
-    done
+#        ${@:1};
+
+#        tput rc;
+#    done
 
     #for ((i=1; i<100; i++)); do
     #echo RUN № $i
@@ -167,8 +169,19 @@ glmark_test() {
     adb shell monkey -p org.linaro.glmark2 1
 }
 
+test_tap() {
+    adb shell input tap $1 $2
+}
+
+test_key() {
+    adb shell input keyevent $1
+}
+
 # ------------------------------------------------------------------------------
 show_usage() {
+    echo "tap     )   test_tap <x> <y>  "
+    echo "key     )   test_key <key>    "
+    echo "                              "
     echo "help    )   show_usage        "
     echo "api     )   test_apis         "
     echo "ham     )   test_hameleon     "
@@ -199,6 +212,8 @@ if [ $# == 0 ]; then
 fi
 
 case $1 in
+tap     )   test_tap $2 $3  ;;
+key     )   test_key $2     ;;
 help    )   show_usage      ;;
 api     )   test_apis       ;;
 ham     )   test_hameleon   ;;

@@ -49,8 +49,8 @@ export board=salvator
 #export TARGET_BOARD_PLATFORM=r8a7796 # M3
 
 #export workspace=/media/$USER/sirius/r-car
-#export workspace=/media/$USER/sirius/r-car-p
-export workspace=/media/$USER/sirius/r-car-q
+export workspace=/media/$USER/sirius/r-car-p
+#export workspace=/media/$USER/sirius/r-car-q
 
 export hwcomposer=$workspace/hardware/renesas/hwcomposer
 export kernel=$workspace/device/renesas/kernel

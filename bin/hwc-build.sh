@@ -140,9 +140,7 @@ build_all() {
 build_q() {
     pushd $workspace
 
-    export DISABLE_FBE=true
     source_lunch
-    
     #make installclean
 
     echo "$(tput setab 3) --- Start building Q --- $(tput sgr0)"
@@ -181,16 +179,17 @@ build_clean() {
 
     pushd $workspace
 
-    echo "$(tput setab 3) --- Clean $1 --- $(tput sgr0)"
 
-    if [[ $1 = "all" ]]; then
+    if [[ $# == 0 || $1 == "all" ]]; then
+        echo "$(tput setab 3) --- Clean ALL --- $(tput sgr0)"
         make installclean
         popd # workspace
         exit 0
     fi
 
     CLEAN_TARGET=$1
-    if [[ $1 = "hwc" ]]; then
+    echo "$(tput setab 3) --- Clean $CLEAN_TARGET --- $(tput sgr0)"
+    if [[ $1 == "hwc" ]]; then
         CLEAN_TARGET=android.hardware.graphics.composer@2.1-service.renesas
     fi
 
@@ -209,9 +208,9 @@ show_usage() {
     echo "flash  )   fastboot       "
     echo "cts    )   build cts      "
     echo "gcov   )  build gcov      "
-    echo "clean  )   build_clean <module>"
-    echo "  clean hwc"
-    echo "  clean all"
+    echo "cl     )   build_clean <module>"
+    echo "  cl hwc"
+    echo "  cl [all]"
 }
 
 if [ $# == 0 ]; then
@@ -228,7 +227,7 @@ nofl    )   build_noflash ${@:2}    ;;
 flash   )   build_flash             ;;
 cts     )   build_noflash cts       ;;
 gcov    )   build_all NATIVE_COVERAGE=true           ;;
-clean   )   build_clean $2          ;;
+cl      )   build_clean $2          ;;
 
 *)  show_usage; exit 1
 esac

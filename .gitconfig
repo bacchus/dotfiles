@@ -8,6 +8,7 @@
 [alias]
     ch = checkout
     cm = commit
+    cl = clean
     st = status -sb
     br = branch
     pul = pull

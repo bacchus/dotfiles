@@ -2,7 +2,7 @@
 # package name from apk
 
 hwc_install() {
-    adb install -r $1
+    adb install -g -r $1
 }
 
 hwc_uninstall() {

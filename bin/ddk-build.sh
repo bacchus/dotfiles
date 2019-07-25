@@ -36,6 +36,7 @@ show_usage() {
     echo "p     )   profile             "
     echo "d i   )   debug install       "
     echo "cp    )   copy to tree        "
+    echo "cl    )   clean               "
 }
 
 if [ $# == 0 ]; then
@@ -75,20 +76,20 @@ ddk_copy_q() {
 
     # sync KM
     rsync -av --delete --exclude=.git ./rogue_km/ $km_dir/
-    
+
     # cp firmware
     cp .outintum/target_neutral/rgx.fw.* ./out/vendor/etc/firmware/
-    
+
     # sync UM
-    #rsync -av --delete --exclude=.git ./out/vendor/ $um_dir/
-    rsync -av ./out/vendor/ $um_dir/
+    rsync -av --delete --exclude=.git --exclude=rgx.fw.*.vz ./out/vendor/ $um_dir/
+    #rsync -av ./out/vendor/ $um_dir/
     cp ./powervr.ini $um_dir/etc/
 
     # cleanup
     rm $um_dir/bin/hwperfbin2jsont
-    rm $um_dir/bin/pvrhwperf
-    rm $um_dir/bin/pvrlogdump
-    rm $um_dir/bin/pvrlogsplit
+    #rm $um_dir/bin/pvrhwperf
+    #rm $um_dir/bin/pvrlogdump
+    #rm $um_dir/bin/pvrlogsplit
     rm -r $um_dir/lib/modules/
 }
 
@@ -107,7 +108,11 @@ elif [[ $1 == "cp" ]]; then
     exit 0
 elif [[ $1 == "qcp" ]]; then
     ddk_copy_q || echo "$(tput setab 1) --- TEST ☠ --- $(tput sgr0)"
-    echo "$(tput setab 2) --- Copy to android tree OK, exit 😊 --- $(tput sgr0)"
+    echo "$(tput setab 2) --- Copy to QQ android tree OK, exit 😊 --- $(tput sgr0)"
+    exit 0
+elif [[ $1 == "cl" ]]; then
+    rm -r .outintkm/ .outintum/ out/
+    echo "$(tput setab 2) --- Clean OK, exit 😊 --- $(tput sgr0)"
     exit 0
 fi
 
@@ -120,7 +125,7 @@ popd
 make $BCC_DEVICE $BCC_DBG_BUILD $BCC_EXTRA_FLAGS #--trace #SHELL='sh -x'
 
 # echo
-# -j4 
+# -j4
 
 #-------------------------------------------------------------------------------
 res=$?

@@ -25,7 +25,7 @@
 	<entry name="window_width_f" mtime="1546612180" type="float" value="100"/>
 	<entry name="window_width" mtime="1546612180" type="int" value="100"/>
 	<entry name="window_height_f" mtime="1546612180" type="float" value="52.037037037037031"/>
-	<entry name="window_height" mtime="1546612180" type="int" value="52"/>
+	<entry name="window_height" mtime="1561567721" type="int" value="50"/>
 	<entry name="use_vte_titles" mtime="1546612180" type="bool" value="false"/>
 	<entry name="window_losefocus" mtime="1546612180" type="bool" value="false"/>
 	<entry name="window_ontop" mtime="1511789985" type="bool" value="true"/>

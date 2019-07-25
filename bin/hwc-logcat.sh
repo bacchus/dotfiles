@@ -16,7 +16,7 @@ test_all() {
 }
 
 test_hwc() {
-    test_target='hwcomposer android.hardware.automotive.evs@1.0.salvator BCC EVSAPP EvsApp EvsManager'
+    test_target='hwcomposer android.hardware.automotive.evs@1.0.salvator BCC EVSAPP EvsApp EvsManager SurfaceFlinger'
 
     echo "$(tput setab 4) --- all logcat [$test_target] {~/logs/hwc-logcat.txt} --- $(tput sgr0)"
     adb logcat -s $test_target $BCC_COLOR | tee ~/logs/hwc-logcat.txt
