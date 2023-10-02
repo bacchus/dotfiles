@@ -31,61 +31,6 @@ alias ard-fix="sudo usermod -a -G dialout bacchus; sudo chmod a+rw /dev/ttyACM0;
 alias bcc-style='astyle --recursive "*.h" "*.cpp"'
 # java
 #export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
-# adb
-#export PATH=$PATH:$TOOLS/android-sdk/platform-tools
-# ccache
-#export USE_CCACHE=1
-#export CCACHE_DIR=<ccache-dir>
-# qt
-# qtchooser -install bcc $TOOLS/qt/5.9.3/gcc_64/bin/qmake
-# export QT_SELECT=bcc
-
-### dev
-export dev=/media/$USER/sirius/dev
-
-### r-car
-export workspace=/media/$USER/sirius/r-car-r
-export ddk=/media/$USER/sirius/ddk
-export nsi=/media/$USER/antares/nsna-git
-
-#export board=kingfisher
-export board=salvator
-export TARGET_BOARD_PLATFORM=r8a7796
-# M3(r8a7796); M3N(r8a77965)
-
-
-export hwcomposer=$workspace/hardware/renesas/hal/hwcomposer
-export kernel=$workspace/device/renesas/kernel
-export evs=$workspace/device/renesas/$board/hal/evs
-#export bccatomic=$workspace/external/bccatomictest
-export proprietary=$workspace/hardware/renesas/proprietary/gfx
-export surfaceflinger=$workspace/frameworks/native/services/surfaceflinger
-export cts=/media/$USER/sirius/cts/android-cts
-export sdk=/media/$USER/sirius/sdk
-export ANDROID_DDK_DEPS=$sdk/ndk-bundle
-
-export PATH=$PATH:$workspace/out/host/linux-x86/bin
-export PATH=$PATH:$TOOLS/FlameGraph
-export PATH=$PATH:$workspace/system/extras/simpleperf/scripts/bin/linux/x86_64
-export PATH=$PATH:$workspace/system/extras/simpleperf/scripts
-export PATH=$PATH:$workspace/development/scripts
-
-alias ifconfig='ip address show'
-alias hwc-source-lunch='pushd $workspace; source build/envsetup.sh; lunch $board-userdebug; popd'
-alias hwc-shell='adb root && adb shell'
-alias hwc-syncre='adb root && adb remount && adb sync && adb reboot'
-alias hwc-fastboot='adb reboot bootloader'
-alias hwc-wipedata='adb reboot recovery'
-alias hwc-remount='adb root && adb remount'
-alias hwc-reboot='adb reboot'
-alias hwc-avb='adb root && adb disable-verity && adb reboot'
-alias hwc-sync='adb sync'
 
 mkcd() { mkdir -p "$1"; cd "$1"; }
-
-# nsi
-alias nsi-docker='docker run --cpus=$(nproc) -it --volume=/media/dstakhnik/antares/nsna-git:/home/dstakhnik/shared --volume $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent -v /dev:/dev --device-cgroup-rule="c 189:* rmw" --network host yocto-build:test'
-alias nsi-grep='grep -irn --exclude-dir=build'
-
-
-
+alias ifconfig='ip address show'
